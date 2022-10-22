@@ -32,8 +32,6 @@ function is_prime(num) {
     return isPrime;
 }
 
-
-
 (async function(reqData) {
     let dataJSON = await reqData;
     let dataSample = [];
@@ -46,7 +44,6 @@ function is_prime(num) {
     }
 
     groupClass = [];
-
 
     let reSampling = dataSample.map(function(data, index) {
         let date = new Date();
@@ -94,10 +91,9 @@ function is_prime(num) {
     // console.log("Kelas S", reSampling.filter(i => i.kelas == 'S').length)
     // console.log("Kelas S Nikah", reSampling.filter(i => i.kelas == 'S' && i.menikah > 0).length)
 
-    let output = {};
 
+    // Render to screen
     groupClass.forEach(item => {
-        // output['kelas_'+item] = reSampling.filter(i => i.kelas = item);
         let data = reSampling.filter(i => i.kelas == item);
 
         let title = `<h1 class="kelas-header">Kelas (${item})</h1>`;
@@ -134,13 +130,5 @@ function is_prime(num) {
 
 
     })
-
-    console.log(output)
-
-
-
-
-
-    // render to table
 
 })(requestData)
