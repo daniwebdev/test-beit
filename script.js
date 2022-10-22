@@ -46,7 +46,7 @@ function is_prime(num) {
     groupClass = [];
 
     let reSampling = dataSample.map(function(data, index) {
-        let date = new Date();
+        // let date = new Date();
 
         data.kelas = undefined;
         data.menikah = undefined;
@@ -56,7 +56,7 @@ function is_prime(num) {
         let nilaiSatuan  = (data.value/10).toString().split('.')[1];
 
         //bulan mati
-        let tahunMati = nilaiSatuan < (date.getMonth()+1) ? date.getFullYear()+1:date.getFullYear();
+        let tahunMati = nilaiSatuan < (new Date().getMonth()+1) ? new Date().getFullYear()+1:new Date().getFullYear();
 
         data.isPrime = is_prime(data.value);
 
@@ -72,7 +72,8 @@ function is_prime(num) {
         // jika kelas 'S'
         if(data.kelas == 'S') {
             if(data.value % 7 == 0) {
-                data.menikah = date.getFullYear() + 1
+
+                data.menikah = new Date().getFullYear() + 1
             }
         }
 
@@ -91,26 +92,26 @@ function is_prime(num) {
     // console.log("Kelas S", reSampling.filter(i => i.kelas == 'S').length)
     // console.log("Kelas S Nikah", reSampling.filter(i => i.kelas == 'S' && i.menikah > 0).length)
 
-
+    console.log(reSampling.filter(x => x.menikah > 0))
     // Render to screen
     groupClass.forEach(item => {
-        let data = reSampling.filter(i => i.kelas == item);
+        let xData = reSampling.filter(i => i.kelas === item);
 
         let title = `<h1 class="kelas-header">Kelas (${item})</h1>`;
 
         let body  = '<div class="kelas-body">';
 
-            data.forEach(item => {
+            xData.forEach(item => {
 
                 let isPrime = '';
                 let menikah = '';
 
                 if(item.isPrime) {
-                    isPrime = `<span>${item.name} akan mati pada <u>${item.dead}</u> karena ${item.value} adalah bilangan prima.</span>`
+                    isPrime = `<span>${item.name} akan <font style="color: red">mati</font> pada <u>${item.dead}</u> karena ${item.value} adalah bilangan prima.</span>`
                 }
 
-                if(data.menikah != undefined) {
-                    menikah = `<span>${item.name} akan menikah di tahun ${data.menikah} karena ${item.value} habis dibagi 7</span>`
+                if(item.menikah > 0) {
+                    menikah = `<span>${item.name} akan <font style="color: blue">menikah</font> di tahun ${item.menikah} karena ${item.value} habis dibagi 7</span>`
                 }
 
                 body += `
